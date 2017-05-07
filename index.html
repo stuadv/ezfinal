@@ -36,15 +36,33 @@
         <div class="col-lg-6">
           <h3>Input information</h3>
           <form>
-            <div class="input-group">
-              <label for="desired">Grade you want</label>
-              <select id="desired" onchange="calc()" class="form-control">
-                <option value="90">A</option>
-                <option value="80">B</option>
-                <option value="70">C</option>
-                <option value="60">D</option>
-                <option value="0">F</option>
-              </select>
+            <div class="form-group">
+              <label for="choice">Grade thresholds</label>
+              <input type="radio" name="choice" id="c1" value="d" onclick="calc()" checked="checked"> Default thresholds
+              <input type="radio" name="choice" id="c2" value="c" onclick="calc()"> Custom thresholds
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="desired">Grade you want</label>
+                  <select id="desired" name="desired" onchange="calc()" class="form-control">
+                    <option value="90">A (90)</option>
+                    <option value="80">B (80)</option>
+                    <option value="70">C (70)</option>
+                    <option value="60">D (60)</option>
+                    <option value="0">F (0)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="custom">Grade you want</label>
+                  <input type="text" id="customA" name="customA" onchange="calc()" class="form-control" placeholder="A: 90">
+                  <input type="text" id="customB" name="customB" onchange="calc()" class="form-control" placeholder="B: 80">
+                  <input type="text" id="customC" name="customC" onchange="calc()" class="form-control" placeholder="C: 70">
+                  <input type="text" id="customD" name="customD" onchange="calc()" class="form-control" placeholder="D: 60">
+                </div>
+              </div>
             </div>
             <div class="form-group">
               <label for="current">Current average grade:</label>
@@ -76,10 +94,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script>
-      var desired, current, fpercent, cpercent, fmin;
+      var choice, desired, current, fpercent, cpercent, fmin;
       function calc() {
+        if ( document.getElementById('c2').checked ) {
+          choice = true;
+        } else {
+          choice = false;
+        }
         var desiredpre = document.getElementById("desired");
         desired = desiredpre.options[desiredpre.selectedIndex].value;
+        if ( choice ) {
+          if ( desired == 90 ) {
+            desired = document.getElementById('customA').value;
+          } else if ( desired == 80 ) {
+            desired = document.getElementById('customB').value;
+          } else if ( desired == 70 ) {
+            desired = document.getElementById('customC').value;
+          } else if ( desired == 60 ) {
+            desired = document.getElementById('customD').value;
+          }
+        }
         console.log( "desired " + desired );
         current = document.getElementById("current").value;
         console.log( "current " + current );
@@ -87,7 +121,7 @@
         console.log( "final % " + fpercent );
         cpercent = 100 - fpercent;
         console.log( "current % " + cpercent );
-        fmin = 100 * (desired - ( 0.01 * cpercent * current ) ) / (fpercent);
+        fmin = (100 * (desired - ( 0.01 * cpercent * current ) ) / (fpercent)).toFixed(4);
         console.log( "fmin " + fmin );
         var min = document.getElementById("fmin");
         if ( fmin > 100 ) {
