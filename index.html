@@ -38,8 +38,8 @@
           <form>
             <div class="form-group">
               <label for="choice">Grade thresholds</label>
-              <input type="radio" name="choice" id="c1" value="d" onclick="calc()" checked="checked"> Default thresholds
-              <input type="radio" name="choice" id="c2" value="c" onclick="calc()"> Custom thresholds
+              <input type="radio" name="choice" id="c1" value="d" onclick="calc()" checked="checked"> <label for="c1">Default thresholds</label>
+              <input type="radio" name="choice" id="c2" value="c" onclick="calc()"> <label for="c2">Custom thresholds</label>
             </div>
             <div class="row">
               <div class="col-md-6">
@@ -56,7 +56,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="custom">Grade you want</label>
+                  <label for="custom">Custom thresholds</label>
                   <input type="text" id="customA" name="customA" onchange="calc()" class="form-control" placeholder="A: 90">
                   <input type="text" id="customB" name="customB" onchange="calc()" class="form-control" placeholder="B: 80">
                   <input type="text" id="customC" name="customC" onchange="calc()" class="form-control" placeholder="C: 70">
